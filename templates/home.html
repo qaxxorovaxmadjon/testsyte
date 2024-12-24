@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valyuta Kalkulyatori</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #ff7e5f, #feb47b); /* Olov rang gradient */
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+    
+        .calculator {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+    
+        h4 {
+            font-size: 26px;
+            font-weight: 700;
+            color: #2d3436;
+            margin-bottom: 15px;
+        }
+    
+        p {
+            font-size: 16px;
+            color: #636e72;
+            margin-bottom: 30px;
+        }
+    
+        .btn-success {
+            display: inline-block;
+            background: linear-gradient(135deg, #6a11cb, #2575fc); /* To'q ko'k va binafsha gradient */
+            color: #ffffff;
+            text-decoration: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 12px;
+            border: none;
+            margin: 10px;
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+    
+        .btn-success:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+    
+        .btn-success:active {
+            transform: translateY(0);
+        }
+        .bold-arrow {
+        font-weight: bold;
+        font-size: 1.5em; /* Kattalashtirish uchun ixtiyoriy */
+    }
+    </style>
+             
+</head>
+
+<body>
+    <div class="calculator">
+        <h4 class="text-center">Valyuta Kalkulyatori</h4>
+        <form method="POST" id="currency-form">{% csrf_token %}
+            <div class="mb-3">
+                <label for="amount" class="form-label">Summani kiriting:</label>
+                <input type="number" step="any" class="form-control" id="amount" name="amount" required>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="from-currency" class="form-label">Qaysi valyutadan:</label>
+                    <select id="from-currency" class="form-select" name="from_currency" required>
+                        <option value="ALL">ALL (Albaniya leki)</option>
+                        <option value="DZD">DZD (Jazoir dinori)</option>
+                        <option value="AOA">AOA (Angola kvanza)</option>
+                        <option value="ARS">ARS (Argentina pesosi)</option>
+                        <option value="AMD">AMD (Armaniston drami)</option>
+                        <option value="AUD">AUD (Avstraliya dollari)</option>
+                        <option value="EUR">EUR (Evro)</option>
+                        <option value="AZN">AZN (Ozarbayjon manati)</option>
+                        <option value="BHD">BHD (Bahrayn dinori)</option>
+                        <option value="BBD">BBD (Barbados dollari)</option>
+                        <option value="BYN">BYN (Belarus rubli)</option>
+                        <option value="BMD">BMD (Bermuda dollari)</option>
+                        <option value="BOB">BOB (Boliviya bolivianosi)</option>
+                        <option value="BAM">BAM (Bosniya va Gersegovina markasi)</option>
+                        <option value="BWP">BWP (Botsvana pulasi)</option>
+                        <option value="BRL">BRL (Braziliya reali)</option>
+                        <option value="BGN">BGN (Bolgariya levi)</option>
+                        <option value="CVE">CVE (Kabo-Verde eskudosi)</option>
+                        <option value="KHR">KHR (Kambodja rieli)</option>
+                        <option value="XAF">XAF (Markaziy Afrika CFA franki)</option>
+                        <option value="CAD">CAD (Kanada dollari)</option>
+                        <option value="KYD">KYD (Kayman orollari dollari)</option>
+                        <option value="CLP">CLP (Chili pesosi)</option>
+                        <option value="CNY">CNY (Xitoy yuani)</option>
+                        <option value="COP">COP (Kolumbiya pesosi)</option>
+                        <option value="CDF">CDF (Kongo franki)</option>
+                        <option value="CRC">CRC (Kosta-Rika koloni)</option>
+                        <option value="HRK">HRK (Xorvatiya kunasi)</option>
+                        <option value="CZK">CZK (Chexiya kronasi)</option>
+                        <option value="DKK">DKK (Daniya kronasi)</option>
+                        <option value="DOP">DOP (Dominikan pesosi)</option>
+                        <option value="USD">USD (AQSH dollari)</option>
+                        <option value="EGP">EGP (Misr funti)</option>
+                        <option value="ETB">ETB (Efiopiya birri)</option>
+                        <option value="FJD">FJD (Fiji dollari)</option>
+                        <option value="GEL">GEL (Gruziya larisi)</option>
+                        <option value="GHS">GHS (Gana sedisi)</option>
+                        <option value="GIP">GIP (Gibraltar funti)</option>
+                        <option value="GTQ">GTQ (Gvatemala ketsali)</option>
+                        <option value="HKD">HKD (Gonkong dollari)</option>
+                        <option value="HUF">HUF (Vengriya forinti)</option>
+                        <option value="ISK">ISK (Islandiya kronasi)</option>
+                        <option value="INR">INR (Hindiston rupiyasi)</option>
+                        <option value="IDR">IDR (Indoneziya rupiyasi)</option>
+                        <option value="IQD">IQD (Iroq dinori)</option>
+                        <option value="ILS">ILS (Isroil shekeli)</option>
+                        <option value="JPY">JPY (Yaponiya iyeni)</option>
+                        <option value="KZT">KZT (Qozog‘iston tengesi)</option>
+                        <option value="KES">KES (Keniya shillingi)</option>
+                        <option value="KRW">KRW (Janubiy Koreya voni)</option>
+                        <option value="KWD">KWD (Quvayt dinori)</option>
+                        <option value="KGS">KGS (Qirg‘iziston so‘mi)</option>
+                        <option value="LAK">LAK (Laos kipi)</option>
+                        <option value="LBP">LBP (Livan funti)</option>
+                        <option value="LYD">LYD (Liviya dinori)</option>
+                        <option value="CHF">CHF (Shveytsariya franki)</option>
+                        <option value="MOP">MOP (Makao patakasi)</option>
+                        <option value="MGA">MGA (Madagaskar ariari)</option>
+                        <option value="MWK">MWK (Malavi kvachasi)</option>
+                        <option value="MYR">MYR (Malayziya ringgiti)</option>
+                        <option value="MVR">MVR (Maldiv rufiysi)</option>
+                        <option value="MXN">MXN (Meksika pesosi)</option>
+                        <option value="MDL">MDL (Moldova leyi)</option>
+                        <option value="MNT">MNT (Mongoliya tugriki)</option>
+                        <option value="MAD">MAD (Marokash dirhami)</option>
+                        <option value="MZN">MZN (Mozambik metikali)</option>
+                        <option value="MMK">MMK (Myanma kyati)</option>
+                        <option value="NAD">NAD (Namibiya dollari)</option>
+                        <option value="NZD">NZD (Yangi Zelandiya dollari)</option>
+                        <option value="NGN">NGN (Nigeriya nayrasi)</option>
+                        <option value="NOK">NOK (Norvegiya kronasi)</option>
+                        <option value="OMR">OMR (Ummon riali)</option>
+                        <option value="PKR">PKR (Pokiston rupiyasi)</option>
+                        <option value="PHP">PHP (Filippin pesosi)</option>
+                        <option value="PLN">PLN (Polsha zlotisi)</option>
+                        <option value="QAR">QAR (Qatar riali)</option>
+                        <option value="RON">RON (Ruminiya leyi)</option>
+                        <option value="RUB">RUB (Rus rubli)</option>
+                        <option value="RWF">RWF (Ruanda franki)</option>
+                        <option value="SAR">SAR (Saudiya riali)</option>
+                        <option value="SGD">SGD (Singapur dollari)</option>
+                        <option value="ZAR">ZAR (Janubiy Afrika randi)</option>
+                        <option value="LKR">LKR (Shri-Lanka rupiyasi)</option>
+                        <option value="SEK">SEK (Shvetsiya kronasi)</option>
+                        <option value="TWD">TWD (Tayvan dollari)</option>
+                        <option value="THB">THB (Tailand bati)</option>
+                        <option value="TRY">TRY (Turkiya lirasi)</option>
+                        <option value="TMT">TMT (Turkmaniston manati)</option>
+                        <option value="UGX">UGX (Uganda shillingi)</option>
+                        <option value="UAH">UAH (Ukraina grivnasi)</option>
+                        <option value="AED">AED (BAA dirhami)</option>
+                        <option value="GBP">GBP (Britaniya funt sterlingi)</option>
+                        <option value="UYU">UYU (Urugvay pesosi)</option>
+                        <option value="UZS">UZS (O'zbek so'mi)</option>
+                        <option value="VND">VND (Vyetnam dongi)</option>
+                        <option value="ZMW">ZMW (Zambiya kvachasi)</option>
+
+                    </select>
+                </div>
+                <div class="col text-center align-self-center">
+                    <span class="bold-arrow">&#8644;</span>
+                </div>
+                <div class="col">
+                    <label for="to-currency" class="form-label">Qaysi valyutaga:</label>
+                    <select id="to-currency" class="form-select " name="to_currency" required>
+                        <option value="ALL">ALL (Albaniya leki)</option>
+                        <option value="DZD">DZD (Jazoir dinori)</option>
+                        <option value="AOA">AOA (Angola kvanza)</option>
+                        <option value="ARS">ARS (Argentina pesosi)</option>
+                        <option value="AMD">AMD (Armaniston drami)</option>
+                        <option value="AUD">AUD (Avstraliya dollari)</option>
+                        <option value="EUR">EUR (Evro)</option>
+                        <option value="AZN">AZN (Ozarbayjon manati)</option>
+                        <option value="BHD">BHD (Bahrayn dinori)</option>
+                        <option value="BBD">BBD (Barbados dollari)</option>
+                        <option value="BYN">BYN (Belarus rubli)</option>
+                        <option value="BMD">BMD (Bermuda dollari)</option>
+                        <option value="BOB">BOB (Boliviya bolivianosi)</option>
+                        <option value="BAM">BAM (Bosniya va Gersegovina markasi)</option>
+                        <option value="BWP">BWP (Botsvana pulasi)</option>
+                        <option value="BRL">BRL (Braziliya reali)</option>
+                        <option value="BGN">BGN (Bolgariya levi)</option>
+                        <option value="CVE">CVE (Kabo-Verde eskudosi)</option>
+                        <option value="KHR">KHR (Kambodja rieli)</option>
+                        <option value="XAF">XAF (Markaziy Afrika CFA franki)</option>
+                        <option value="CAD">CAD (Kanada dollari)</option>
+                        <option value="KYD">KYD (Kayman orollari dollari)</option>
+                        <option value="CLP">CLP (Chili pesosi)</option>
+                        <option value="CNY">CNY (Xitoy yuani)</option>
+                        <option value="COP">COP (Kolumbiya pesosi)</option>
+                        <option value="CDF">CDF (Kongo franki)</option>
+                        <option value="CRC">CRC (Kosta-Rika koloni)</option>
+                        <option value="HRK">HRK (Xorvatiya kunasi)</option>
+                        <option value="CZK">CZK (Chexiya kronasi)</option>
+                        <option value="DKK">DKK (Daniya kronasi)</option>
+                        <option value="DOP">DOP (Dominikan pesosi)</option>
+                        <option value="USD">USD (AQSH dollari)</option>
+                        <option value="EGP">EGP (Misr funti)</option>
+                        <option value="ETB">ETB (Efiopiya birri)</option>
+                        <option value="FJD">FJD (Fiji dollari)</option>
+                        <option value="GEL">GEL (Gruziya larisi)</option>
+                        <option value="GHS">GHS (Gana sedisi)</option>
+                        <option value="GIP">GIP (Gibraltar funti)</option>
+                        <option value="GTQ">GTQ (Gvatemala ketsali)</option>
+                        <option value="HKD">HKD (Gonkong dollari)</option>
+                        <option value="HUF">HUF (Vengriya forinti)</option>
+                        <option value="ISK">ISK (Islandiya kronasi)</option>
+                        <option value="INR">INR (Hindiston rupiyasi)</option>
+                        <option value="IDR">IDR (Indoneziya rupiyasi)</option>
+                        <option value="IQD">IQD (Iroq dinori)</option>
+                        <option value="ILS">ILS (Isroil shekeli)</option>
+                        <option value="JPY">JPY (Yaponiya iyeni)</option>
+                        <option value="KZT">KZT (Qozog‘iston tengesi)</option>
+                        <option value="KES">KES (Keniya shillingi)</option>
+                        <option value="KRW">KRW (Janubiy Koreya voni)</option>
+                        <option value="KWD">KWD (Quvayt dinori)</option>
+                        <option value="KGS">KGS (Qirg‘iziston so‘mi)</option>
+                        <option value="LAK">LAK (Laos kipi)</option>
+                        <option value="LBP">LBP (Livan funti)</option>
+                        <option value="LYD">LYD (Liviya dinori)</option>
+                        <option value="CHF">CHF (Shveytsariya franki)</option>
+                        <option value="MOP">MOP (Makao patakasi)</option>
+                        <option value="MGA">MGA (Madagaskar ariari)</option>
+                        <option value="MWK">MWK (Malavi kvachasi)</option>
+                        <option value="MYR">MYR (Malayziya ringgiti)</option>
+                        <option value="MVR">MVR (Maldiv rufiysi)</option>
+                        <option value="MXN">MXN (Meksika pesosi)</option>
+                        <option value="MDL">MDL (Moldova leyi)</option>
+                        <option value="MNT">MNT (Mongoliya tugriki)</option>
+                        <option value="MAD">MAD (Marokash dirhami)</option>
+                        <option value="MZN">MZN (Mozambik metikali)</option>
+                        <option value="MMK">MMK (Myanma kyati)</option>
+                        <option value="NAD">NAD (Namibiya dollari)</option>
+                        <option value="NZD">NZD (Yangi Zelandiya dollari)</option>
+                        <option value="NGN">NGN (Nigeriya nayrasi)</option>
+                        <option value="NOK">NOK (Norvegiya kronasi)</option>
+                        <option value="OMR">OMR (Ummon riali)</option>
+                        <option value="PKR">PKR (Pokiston rupiyasi)</option>
+                        <option value="PHP">PHP (Filippin pesosi)</option>
+                        <option value="PLN">PLN (Polsha zlotisi)</option>
+                        <option value="QAR">QAR (Qatar riali)</option>
+                        <option value="RON">RON (Ruminiya leyi)</option>
+                        <option value="RUB">RUB (Rus rubli)</option>
+                        <option value="RWF">RWF (Ruanda franki)</option>
+                        <option value="SAR">SAR (Saudiya riali)</option>
+                        <option value="SGD">SGD (Singapur dollari)</option>
+                        <option value="ZAR">ZAR (Janubiy Afrika randi)</option>
+                        <option value="LKR">LKR (Shri-Lanka rupiyasi)</option>
+                        <option value="SEK">SEK (Shvetsiya kronasi)</option>
+                        <option value="TWD">TWD (Tayvan dollari)</option>
+                        <option value="THB">THB (Tailand bati)</option>
+                        <option value="TRY">TRY (Turkiya lirasi)</option>
+                        <option value="TMT">TMT (Turkmaniston manati)</option>
+                        <option value="UGX">UGX (Uganda shillingi)</option>
+                        <option value="UAH">UAH (Ukraina grivnasi)</option>
+                        <option value="AED">AED (BAA dirhami)</option>
+                        <option value="GBP">GBP (Britaniya funt sterlingi)</option>
+                        <option value="UYU">UYU (Urugvay pesosi)</option>
+                        <option value="UZS">UZS (O'zbek so'mi)</option>
+                        <option value="VND">VND (Vyetnam dongi)</option>
+                        <option value="ZMW">ZMW (Zambiya kvachasi)</option>
+
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success w-100">Aylantirish</button>
+        </form>
+
+        {% if converted_amount %}
+        <div class="result-output border p-3 bg-light mt-3">
+            <strong>Natija:</strong> {{ converted_amount }}
+        </div>
+        {% endif %}
+    </div>
+    <script>
+        // Optional client-side validation
+        document.querySelector("#currency-form").addEventListener("submit", function (e) {
+            const amount = document.getElementById("amount").value;
+            if (!amount || parseFloat(amount) <= 0) {
+                e.preventDefault();
+                alert("Summani to'g'ri kiriting!");
+            }
+        });
+    </script>
+</body>
+
+</html>
